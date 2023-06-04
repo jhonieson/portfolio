@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Portfolio | Jhonieson</title>
+
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+
+<script>
+    var TxtType = function(el, toRotate, period) {
+        this.toRotate = toRotate;
+        this.el = el;
+        this.loopNum = 0;
+        this.period = parseInt(period, 10) || 2000;
+        this.txt = '';
+        this.tick();
+        this.isDeleting = false;
+    };
+
+    TxtType.prototype.tick = function() {
+        var i = this.loopNum % this.toRotate.length;
+        var fullTxt = this.toRotate[i];
+
+        if (this.isDeleting) {
+        this.txt = fullTxt.substring(0, this.txt.length - 1);
+        } else {
+        this.txt = fullTxt.substring(0, this.txt.length + 1);
+        }
+
+        this.el.innerHTML = '<span class="wrap">'+this.txt+'</span>';
+
+        var that = this;
+        var delta = 200 - Math.random() * 100;
+
+        if (this.isDeleting) { delta /= 2; }
+
+        if (!this.isDeleting && this.txt === fullTxt) {
+        delta = this.period;
+        this.isDeleting = true;
+        } else if (this.isDeleting && this.txt === '') {
+        this.isDeleting = false;
+        this.loopNum++;
+        delta = 500;
+        }
+
+        setTimeout(function() {
+        that.tick();
+        }, delta);
+    };
+
+    window.onload = function() {
+        var elements = document.getElementsByClassName('typewrite');
+        for (var i=0; i<elements.length; i++) {
+            var toRotate = elements[i].getAttribute('data-type');
+            var period = elements[i].getAttribute('data-period');
+            if (toRotate) {
+              new TxtType(elements[i], JSON.parse(toRotate), period);
+            }
+        }
+        // INJECT CSS
+        var css = document.createElement("style");
+        css.type = "text/css";
+        css.innerHTML = ".typewrite > .wrap { border-right: 0.08em solid #fff}";
+        document.body.appendChild(css);
+    };
+</script>
+</head>
+<style>
+  .header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #000;
+  background-image: linear-gradient(45deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9));
+  color: #fff;
+  box-shadow: 0px 2px 2px 2px #1F51FF;
+  border-radius: 10px;
+  
+}
+.site-title h1, a{
+    font-family: 'Orbitron', sans-serif;
+}  
+body{
+    background-color: black;
+}
+
+
+@media (max-width: 767px) {
+  .header {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .site-title,
+  .logo {
+    margin-bottom: 10px;
+
+  }
+
+}
+
+
+header {
+  padding: 10px;
+}
+
+.headerx-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.headerx-item {
+  width: 33.33%;
+  text-align: center;
+}
+
+.headerx-item a {
+  display: block;
+  text-decoration: none;
+  color: #000;
+  background-color: #007bff;
+  background-image: linear-gradient(45deg, #007bff, #00acee);
+  padding: 10px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  margin: 1px;
+}
+
+.headerx-item a:hover {
+  transform: scale(1.1);
+}
+
+.typewriter {
+  display: flex; /* Add flex display */
+  align-items: center; /* Center vertically */
+  justify-content: center; /* Center horizontally */
+  text-align: center; /* Center the text within the div */
+}
+
+.typewrite {
+  display: inline-block;
+  color: white;
+}
+
+.wrap {
+  display: inline-block;
+  white-space: pre;
+}
+
+</style>
+<body>
+    <div class="header">
+        <div class="site-title">
+          <h1>Jhonieson Aloba</h1>
+        </div>
+        <div class="logo">
+          <img src="imgs/logo.png" alt="Logo" width="150px" height="80px">
+        </div>
+      </div>
+
+      <header>
+        <div class="headerx-container">
+          <div class="headerx-item">
+            <a href="#">Home</a>
+          </div>
+          <div class="headerx-item">
+            <a href="#">Projects</a>
+          </div>
+          <div class="headerx-item">
+            <a href="#">About</a>
+          </div>
+        </div>
+      </header>
+
+
+      <div class="typewriter">
+        <h1>
+            <a href="" class="typewrite" data-period="2000" data-type='[ "Hi, Im Jhonieson.", "I am Creative.", "I love to develop.", "Coding is helping." ]'>
+              <span class="wrap"></span>
+            </a>
+          </h1>
+      </div>
+      
+</body>
+</html>
